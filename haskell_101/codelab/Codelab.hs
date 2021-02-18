@@ -84,23 +84,23 @@ codelab = error "SOMETHING IS NOT IMPLEMENTED!"
 -}
 
 add :: Int -> Int -> Int
-add x y = codelab
+add x y = x + y
 
 subtract :: Int -> Int -> Int
-subtract x y = codelab
+subtract x y = x - y
 
 double :: Int -> Int
-double x = codelab
+double x = 2 * x
 
 multiply :: Int -> Int -> Int
-multiply x y = codelab
+multiply x y = x * y
 
 -- Note that Haskell is strict about types even for basic integral types.
 -- Int is never automatically converted to Double.  But you can use
 -- fromIntegral to convert from any integral type to any number type.
 
 divide :: Int -> Int -> Double
-divide x y = codelab
+divide x y = (fromIntegral) x / (fromIntegral y)
 
 -- Remember that you can use if/then/else:
 --
@@ -111,7 +111,7 @@ divide x y = codelab
 -- even relatively small numbers.
 
 factorial :: Integer -> Integer
-factorial n = codelab
+factorial n = if (n==0 || n == 1) then 1 else n * factorial(n - 1)
 
 -- Expressions can be assigned names, called "bindings", using the
 -- following syntax:
@@ -125,7 +125,7 @@ factorial n = codelab
 --   https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 
 gcd :: Int -> Int -> Int
-gcd a b = codelab
+gcd a b | a == b = a | a > b = gcd (a - b) b | otherwise = gcd a (b - a)
 
 
 
@@ -150,7 +150,7 @@ data Minutes = Minutes Int
 --     div a b
 
 hours :: Minutes -> Int
-hours m = codelab
+hours (Minutes m) = m `div` 60
 
 -- In case you need some mathematical functions, you can use
 --
@@ -163,7 +163,7 @@ hours m = codelab
 -- example, for 15 and 25, distance is 10.
 
 timeDistance :: Minutes -> Minutes -> Minutes
-timeDistance m1 m2 = codelab
+timeDistance (Minutes m1) (Minutes m2) = Minutes $ fromIntegral $ abs(m1 - m2)
 
 type Point = (Int, Int)
 
@@ -179,7 +179,8 @@ type Point = (Int, Int)
 --     f (x, y) = abs x + abs y
 
 pointDistance :: Point -> Point -> Double
-pointDistance p1 p2 = codelab
+pointDistance p1 p2 = sqrt $ fromIntegral $ sqr (fst p1 - fst p2) + sqr (snd p1 - snd p2)
+  where sqr a = a * a
 
 
 {- #####################################################################
@@ -198,7 +199,8 @@ pointDistance p1 p2 = codelab
 -- null tells you whether a list is empty or not
 
 null :: [a] -> Bool
-null fixme = codelab
+null [] = True
+null _ = False
 
 
 -- head returns the first element of the list.
@@ -207,7 +209,7 @@ null fixme = codelab
 
 head :: [a] -> a
 head []    = error "head: empty list"
-head fixme = codelab
+head (x:_) = x
 
 
 -- tail returns everything but the first element.
