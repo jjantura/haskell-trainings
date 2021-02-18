@@ -216,7 +216,8 @@ head (x:_) = x
 -- If the list is empty it panics
 
 tail :: [a] -> [a]
-tail = codelab
+tail [] = error "tail: empty list"
+tail (_:xs) = xs
 
 
 
@@ -234,28 +235,32 @@ tail = codelab
 -- Do you remember it from the slides?
 
 length :: [a] -> Int
-length l = codelab
+length []  = 0
+length (x:xs) = 1 + length xs
 
 
 -- "and" returns True if all the boolean values in the list are True.
 -- What do you think it returns for an empty list?
 
 and :: [Bool] -> Bool
-and l = codelab
+and [] = True
+and (x:xs) = x && and xs
 
 
 -- "or" returns True if at least one value in the list is True.
 -- What do you think it returns for an empty list?
 
 or :: [Bool] -> Bool
-or l = codelab
+or [] = False
+or (x:xs) = x || or xs
 
 
 -- "(++)" is the concatenation operator.  To concatenate two linked lists
 -- you have to chain the second one at the end of the first one.
 
 (++) :: [a] -> [a] -> [a]
-l1 ++ l2 = codelab
+[] ++ l2 = l2
+(l:l1) ++ l2 = l : (l1 ++ l2)
 
 
 
