@@ -291,8 +291,9 @@ or (x:xs) = x || or xs
 -- You probably remember this one?  Nothing extraordinary here.
 
 map :: (a -> b) -> [a] -> [b]
-map _ []     = codelab
-map f (a:as) = codelab
+map _ []     = []
+map f (a:as) = [f a] ++ map f as
+
 
 
 -- Same thing here for filter, except that we use it to introduce a new
@@ -308,26 +309,26 @@ map f (a:as) = codelab
 --     | otherwise =  x
 
 filter :: (a -> Bool) -> [a] -> [a]
-filter _ [] = codelab
+filter _ [] = []
 filter f (x:xs)
-  | codelab   = codelab
-  | otherwise = codelab
+  | f x   = [x] ++ filter f xs
+  | otherwise = filter f xs
 
 
 -- foldl
 -- foldl (-) 0 [1,2,3,4]   ==   (((0 - 1) - 2) - 3) - 4   ==   -10
 
 foldl :: (a -> x -> a) -> a -> [x] -> a
-foldl _ a []     = codelab
-foldl f a (x:xs) = codelab
+foldl _ a []     = a
+foldl f a (x:xs) = foldl f (a `f` x) xs
 
 
 -- foldr
 -- foldr (-) 0 [1,2,3,4]   ==   1 - (2 - (3 - (4 - 0)))   ==    -2
 
 foldr :: (x -> a -> a) -> a -> [x] -> a
-foldr _ a []     = codelab
-foldr f a (x:xs) = codelab
+foldr _ a []     = a
+foldr f a (x:xs) = x `f` foldr f a xs
 
 
 
