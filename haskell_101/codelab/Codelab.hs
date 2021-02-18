@@ -388,21 +388,23 @@ foldr f a (x:xs) = x `f` foldr f a xs
 -- If we were to fix the "head" function, how could we do that?
 
 safeHead :: [a] -> Maybe a
-safeHead []    = codelab
-safeHead (x:_) = codelab
+safeHead []    = Nothing
+safeHead (x:_) = Just x
 
 
 -- "isNothing" should not need an explanation by now!
 
 isNothing :: Maybe a -> Bool
-isNothing = codelab
-
+isNothing Nothing = True
+isNothing _ = False
 
 -- The "fromMaybe" function is your way out of a Maybe value.
 -- It takes a default value to use in case our Maybe value is Nothing.
 
 fromMaybe :: a -> Maybe a -> a
-fromMaybe _ _ = codelab
+fromMaybe a Nothing =  a
+fromMaybe a (Just b) = b
+
 -- Consider starting with these patterns:
 --
 -- fromMaybe def fixme = codelab
@@ -414,7 +416,8 @@ fromMaybe _ _ = codelab
 -- ...doesn't it kinda look like fold?
 
 maybe :: b -> (a -> b) -> Maybe a -> b
-maybe _ _ _ = codelab
+maybe b _ Nothing = b
+maybe _ f (Just a) = f a
 -- Consider starting with these patterns:
 -- maybe b _ fixme = codelab
 -- maybe _ f fixme = codelab
